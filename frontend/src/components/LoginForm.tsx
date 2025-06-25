@@ -1,8 +1,8 @@
 import React from "react";
 import { TextField, Button, Link, Container, Box, Typography } from "@mui/material";
-import { IAuth } from "../../interfaces/IAuth";
-import { useAppDispatch } from "../../hooks/hooks";
-import { login } from "../../store/userSlice";
+import { IAuth } from "../interfaces/IAuth";
+import { useAppDispatch } from "../hooks/hooks";
+import { login } from "../store/userSlice";
 import { useState } from "react";
 
 export default function LoginForm ({ onSwitch } : IAuth) {

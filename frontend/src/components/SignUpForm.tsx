@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { TextField, Button, Link, Container, Box, Typography } from "@mui/material";
-import { IAuth } from "../../interfaces/IAuth";
-import { useAppDispatch } from "../../hooks/hooks";
-import { registration } from "../../store/userSlice";
+import { IAuth } from "../interfaces/IAuth";
+import { useAppDispatch } from "../hooks/hooks";
+import { registration } from "../store/userSlice";
 
 export default function SignUpForm({ onSwitch }: IAuth) {
     const dispatch = useAppDispatch();
