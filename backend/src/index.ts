@@ -1,6 +1,7 @@
 import express from 'express'
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 import UserModel from './models/user.dal';
 import UserService from './services/user.service';
@@ -10,6 +11,13 @@ import TokenService from './services/token.service';
 
 const app = express();
 const port = Number(process.env.PORT);
+
+app.use(
+    cors({
+        credentials: true,
+        origin: process.env.CLIENT_URL
+    })
+)
 
 app.use(cookieParser());
 app.use(express.json());

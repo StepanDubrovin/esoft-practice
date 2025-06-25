@@ -1,11 +1,11 @@
-import SlotsSignIn from "./AuthForm/AuthFrom"
+import AuthForm from "./components/AuthForm/AuthFrom"
 
 function App() {
 
   return (
-    <>
-      <SlotsSignIn/>
-    </>
+    <div>
+      <AuthForm/>
+    </div>
   )
 }
 
