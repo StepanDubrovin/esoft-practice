@@ -1,12 +1,23 @@
 import React, { useState } from "react";
-import { TextField, Button, Link, Container, Box, Typography } from "@mui/material";
+import { 
+    TextField, 
+    Button, 
+    Link, 
+    Container, 
+    Box, 
+    Typography, 
+    IconButton, 
+    InputAdornment } 
+from "@mui/material";
 import { IAuth } from "../interfaces/IAuth";
 import { useAppDispatch } from "../hooks/hooks";
 import { registration } from "../store/userSlice";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function SignUpForm({ onSwitch }: IAuth) {
     const dispatch = useAppDispatch();
     const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [userFirstName, setUserFirstName] = useState('');
     const [userLastName, setUserLastName] = useState('');
@@ -89,6 +100,24 @@ export default function SignUpForm({ onSwitch }: IAuth) {
                     sx={{ mb: 2 }}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    edge='end'
+                                    arial-label='toogle password visibility'
+                                    size="small"
+                                >
+                                    {showPassword ? (
+                                        <VisibilityOff fontSize="inherit"/> 
+                                    ) : ( 
+                                        <Visibility fontSize="inherit"/> 
+                                    )}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
                 <Button 
                     variant="outlined" 

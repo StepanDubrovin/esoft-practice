@@ -1,13 +1,24 @@
 import React from "react";
-import { TextField, Button, Link, Container, Box, Typography } from "@mui/material";
+import { 
+    TextField, 
+    Button, 
+    Link, 
+    Container, 
+    Box, 
+    Typography, 
+    IconButton, 
+    InputAdornment } 
+from "@mui/material";
 import { IAuth } from "../interfaces/IAuth";
 import { useAppDispatch } from "../hooks/hooks";
 import { login } from "../store/userSlice";
 import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function LoginForm ({ onSwitch } : IAuth) {
     const dispatch = useAppDispatch();
     const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -30,7 +41,7 @@ export default function LoginForm ({ onSwitch } : IAuth) {
     }
 
     return (
-        <Container maxWidth='xs' sx={{ mt: 2 }}>
+        <Container sx={{ mt: 2 }}>
             <Box 
                 component='form'
                 sx={{
@@ -56,13 +67,31 @@ export default function LoginForm ({ onSwitch } : IAuth) {
                 <TextField
                     label='Пароль'
                     name='password'
-                    type="password"
+                    type={showPassword ? 'text': 'password'}
                     size="small"
                     fullWidth
                     required
                     sx={{ mb: 2 }}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    edge='end'
+                                    arial-label='toogle password visibility'
+                                    size="small"
+                                >
+                                    {showPassword ? (
+                                        <VisibilityOff fontSize="inherit"/> 
+                                    ) : ( 
+                                        <Visibility fontSize="inherit"/> 
+                                    )}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
                 <Button 
                     variant="outlined" 
