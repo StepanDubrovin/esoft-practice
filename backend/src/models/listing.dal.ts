@@ -1,6 +1,7 @@
 import db from "../db";
 import { ApiError } from "../exceptions/api_errors";
 import { ICreateListingData } from "../interfaces/ICreateListingData";
+import { IListingsFilters } from "../interfaces/IListingsFilters";
 import { IUpdateListingData } from "../interfaces/IUpdateListingData";
 
 class ListingModel {
@@ -23,6 +24,31 @@ class ListingModel {
             const errorArray: string[] = [err instanceof Error ? err.message : String(err)];
 
             ApiError.BadConnectToDB(errorArray);
+        }
+    }
+
+    async getAll(filters: IListingsFilters) {
+        try {
+            const query = db('listings');
+
+            if (filters.city) {
+                query.where('city', filters.city);
+            }
+            if (filters.type) {
+                query.where('type', filters.type);
+            }
+            if (filters.sortPrice) {
+                query.orderBy('price', filters.sortPrice)
+            } else {
+                query.orderBy('price', 'desc');
+            }
+            // добавить подумать
+            return await query.select();
+        } catch (err) {
+            console.error('Error fetching listings', err);
+            const errorArray: string[] = [err instanceof Error ? err.message : String(err)];
+            
+            throw ApiError.BadConnectToDB(errorArray);
         }
     }
 
