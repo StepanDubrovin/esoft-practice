@@ -15,7 +15,7 @@ import { login } from "../store/userSlice";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-export default function LoginForm ({ onSwitch } : IAuth) {
+export default function LoginForm ({ onSwitch, onClose } : IAuth) {
     const dispatch = useAppDispatch();
     const [error, setError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +35,7 @@ export default function LoginForm ({ onSwitch } : IAuth) {
             setUserEmail('');
             setUserPassword('');
             setError(false)
+            onClose()
         } catch {
             setError(true);
         }

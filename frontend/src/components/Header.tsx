@@ -1,17 +1,24 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Menu, MenuItem   } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  IconButton,
+} from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import AuthForm from './ModalAuth';
+import useCheckAuth from '../hooks/useCheckAuth';
+import AccountMenu from './AccountMenu';
 
 const Header: React.FC = () => {
- const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+  const store = useCheckAuth();
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -20,38 +27,40 @@ const Header: React.FC = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Listings
           </Typography>
+          {store.isAuth ? (
+          <Box
+            position='relative'
+            onMouseEnter={() => setIsAccountMenuOpen(true)}
+            onMouseLeave={() => setIsAccountMenuOpen(false)}
+          >
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              color="inherit"
+              onClick={() => setAuthModalOpen(true)}
+            >
+              <AccountCircle /> 
+            </IconButton>
+            {isAccountMenuOpen && <AccountMenu />}
+          </Box>
+        ) : (
           <IconButton
             size="large"
             aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
             color="inherit"
+            onClick={() => setAuthModalOpen(true)}
           >
             <AccountCircle />
           </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-          </Menu>
+        )}
         </Toolbar>
       </AppBar>
+      <AuthForm
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </Box>
   );
-}
+};
 
 export default Header;

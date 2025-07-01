@@ -25,7 +25,6 @@ class UserController {
             res.cookie('accessToken', registrationResponse.accessToken, {
                 maxAge: 30 * 60 * 1000, 
                 httpOnly: true,
-                secure: true
             });
 
             res.status(200).json({...registrationResponse, validToken: true});
@@ -41,7 +40,6 @@ class UserController {
             res.cookie('accessToken', loginResponse.accessToken, {
                 maxAge: 30 * 60 * 1000, 
                 httpOnly: true,
-                secure: true
             });
 
             res.status(200).json({...loginResponse, validToken: true});

@@ -14,7 +14,7 @@ import { useAppDispatch } from "../hooks/hooks";
 import { registration } from "../store/userSlice";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-export default function SignUpForm({ onSwitch }: IAuth) {
+export default function SignUpForm({ onSwitch, onClose}: IAuth) {
     const dispatch = useAppDispatch();
     const [error, setError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -41,6 +41,7 @@ export default function SignUpForm({ onSwitch }: IAuth) {
             setUserEmail('');
             setUserPassword('');
             setError(false);
+            onClose()
         } catch {
             setError(true);
         }
@@ -93,7 +94,7 @@ export default function SignUpForm({ onSwitch }: IAuth) {
                 <TextField
                     label='Пароль'
                     name='password'
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     size="small"
                     fullWidth
                     required
@@ -106,7 +107,7 @@ export default function SignUpForm({ onSwitch }: IAuth) {
                                 <IconButton
                                     onClick={() => setShowPassword(!showPassword)}
                                     edge='end'
-                                    arial-label='toogle password visibility'
+                                    aria-label='toggle password visibility'
                                     size="small"
                                 >
                                     {showPassword ? (

@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthorizationPage from "./pages/AuthorizationPage";
 import Layout from "./components/Layout";
+import ListingsPage from "./pages/ListingPage";
 
 
 const routes = [
-    { path: '', element: <AuthorizationPage/>}
+    { path: '', element: <ListingsPage/>},
+
 ];
 
 export const Router = () => (
@@ -18,7 +19,6 @@ export const Router = () => (
                         path={route.path}
                         element={route.element}
                     >
-
                     </Route>
                 ))}
             </Route>

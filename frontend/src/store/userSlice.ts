@@ -8,7 +8,6 @@ const initialState: IUserState = {
     isAuth: false,
     isLoading: false,
     validToken: false,
-    users: []
 };
 
 export const registration = createAsyncThunk(
@@ -42,7 +41,7 @@ export const logout = createAsyncThunk(
     async(_, { rejectWithValue }) => {
         try {
             await AuthService.logout();
-            return { isAuth: false, validToken: false, users: []};
+            return { isAuth: false, validToken: false };
         } catch (error) {
             console.error('Ошибка при выходе', error);
             return rejectWithValue(error.message);
@@ -84,7 +83,6 @@ const userReducer = (state = initialState, action: any) => {
                 isAuth: action.payload.isAuth,
                 isLoading: false,
                 validToken: action.payload.validToken,
-                users: action.payload.users
             };
         case checkAuth.fulfilled.type:
             return {
@@ -106,7 +104,6 @@ const userReducer = (state = initialState, action: any) => {
                 isAuth: false,
                 isLoading: false,
                 validToken: false,
-                users: [],
             };
         default: 
             return state;

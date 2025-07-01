@@ -6,18 +6,19 @@ import { ISignInData } from "../models/ISignInData";
 import { CheckAuthResponse } from "../models/response/CheckAuthResponse";
 
 export default class AuthService {
-    static async registration(signUpData: ISignUpData
-    ): Promise<AxiosResponse<AuthResponse>> {
-        return $api.post<AuthResponse>('/registration', signUpData);
-    }
 
     static async login(signInData: ISignInData
     ): Promise<AxiosResponse<AuthResponse>> {
         return $api.post<AuthResponse>('/login', signInData)
     }
 
+    static async registration(signUpData: ISignUpData
+    ): Promise<AxiosResponse<AuthResponse>> {
+        return $api.post<AuthResponse>('/registration', signUpData);
+    }
+
     static async logout(): Promise<void> {
-        return $api.post('logout');
+        return $api.post('/logout');
     }
 
     static async checkAuth(): Promise<AxiosResponse<CheckAuthResponse>> {

@@ -36,13 +36,11 @@ const validateListing: ValidationChain[] = [
 export default (listingController: ListingController) => {
     const router = express.Router();
 
-    router.use(authenticateJWT);
-
     router.post('/listing', validateListing, listingController.createListing);
     router.get('/listings', listingController.getAllListings);
     router.get('/listing/:listing_id', listingController.getListingById);
-    router.put('/listing/:listing_id', listingController.updateListing);
-    router.delete('/listing/:listing_id', listingController.deleteListing);
+    router.put('/listing/:listing_id', authenticateJWT,listingController.updateListing);
+    router.delete('/listing/:listing_id', authenticateJWT,listingController.deleteListing);
 
     return router;
 }
