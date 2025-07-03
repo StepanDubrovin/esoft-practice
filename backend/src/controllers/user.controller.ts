@@ -27,7 +27,11 @@ class UserController {
                 httpOnly: true,
             });
 
-            res.status(200).json({...registrationResponse, validToken: true});
+            res.status(200).json({
+                accessToken: registrationResponse.accessToken,
+                user: registrationResponse.user,
+                validToken: true
+            });
 
         } catch(e) {
             next(e);
@@ -42,7 +46,11 @@ class UserController {
                 httpOnly: true,
             });
 
-            res.status(200).json({...loginResponse, validToken: true});
+            res.status(200).json({
+                accessToken: loginResponse.accessToken,
+                user: loginResponse.user,
+                validToken: true
+            });
         } catch (e) {
             next(e);
         }

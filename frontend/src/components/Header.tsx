@@ -1,60 +1,59 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  IconButton,
-} from '@mui/material';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import AuthForm from './ModalAuth';
-import useCheckAuth from '../hooks/useCheckAuth';
-import AccountMenu from './AccountMenu';
+import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { useState } from "react";
+import useCheckAuth from "../hooks/useCheckAuth";
+import AuthForm from "./ModalAuth";
+import AccountMenu from "./AccountMenu";
 
-const Header: React.FC = () => {
-
-  
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-
-
+const Header = () => {
   const store = useCheckAuth();
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#131313' }}>
+    <Box>
+      <AppBar position="static" sx={{ backgroundColor: "#131313" }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Listings
           </Typography>
+
           {store.isAuth ? (
-          <Box
-            position='relative'
-            onMouseEnter={() => setIsAccountMenuOpen(true)}
-            onMouseLeave={() => setIsAccountMenuOpen(false)}
-          >
             <IconButton
               size="large"
-              aria-label="account of current user"
+              color="inherit"
+              onClick={handleMenu}
+            >
+              <AccountCircle />
+            </IconButton>
+          ) : (
+            <IconButton
+              size="large"
               color="inherit"
               onClick={() => setAuthModalOpen(true)}
             >
-              <AccountCircle /> 
+              <AccountCircle />
             </IconButton>
-            {isAccountMenuOpen && <AccountMenu />}
-          </Box>
-        ) : (
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            color="inherit"
-            onClick={() => setAuthModalOpen(true)}
-          >
-            <AccountCircle />
-          </IconButton>
-        )}
+          )}
         </Toolbar>
       </AppBar>
+
+      {store.isAuth && (
+        <AccountMenu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleCloseMenu}
+        />
+      )}
+
       <AuthForm
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}

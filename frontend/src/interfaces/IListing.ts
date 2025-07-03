@@ -1,6 +1,6 @@
 import { ListingStatus, ListingType } from "../constants/listing";
 
-export interface IListingCard {
+export interface IListing {
     id: string,
     title: string,
     price: number,

@@ -1,50 +1,47 @@
-import { Box, Link } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../store/userSlice";
 import { useAppDispatch } from "../hooks/hooks";
-import { motion } from 'framer-motion';
+import { IAccountMenu } from "../interfaces/IAccountMenu";
 
-const AccountMenu = () => {
-    const MotionBox = motion(Box);
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
 
-    const handleLogout = () => {
-        dispatch(logout());
+export default function AccountMenu ({ anchorEl, open, onClose }: IAccountMenu) {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-        navigate('/');
-    };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+    onClose();
+  };
 
-    return (
-        <MotionBox
-            position='absolute'
-            top='100%'
-            left='0'
-            bgcolor='#fff'
-            border='1px solid black'
-            zIndex='10'
-            p={2}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
-        >
-            <Link
-                display='block'
-                onClick={() => navigate('/profile')}
-                p={2}
-            >
-                Мой аккаунт
-            </Link>
-            <Link
-                display="block"
-                onClick={handleLogout}
-                p={2}
-            >
-                Выход
-            </Link>
-        </MotionBox>
-    );
+  const handleProfile = () => {
+    navigate('/profile');
+    onClose();
+  };
+  const handleMyListing = () => {
+    navigate('/userListings');
+    onClose();
+  };
+
+  return (
+    <Menu
+      id="menu-appbar"
+      anchorEl={anchorEl}
+      open={open}
+      onClose={onClose}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+    > 
+      <MenuItem onClick={handleMyListing}>Мои объявления</MenuItem>
+      <MenuItem onClick={handleProfile}>Мой профиль</MenuItem>
+      <MenuItem onClick={handleLogout}>Выход</MenuItem>
+    </Menu>
+  );
 };
-
-export default AccountMenu;

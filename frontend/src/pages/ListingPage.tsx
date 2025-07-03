@@ -1,46 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Container,
-  TextField,
-  MenuItem,
-  CircularProgress,
-  Typography,
   Box
 } from "@mui/material";
 import { useListings } from "../hooks/useListings";
 import ListingCard from "../components/ListingCard";
+import { IListingCard } from "../interfaces/IListingCard";
+import { useEffect } from "react";
+import { useAppDispatch } from "../hooks/hooks";
+import { getAllUsers } from "../store/userSlice";
+import ListingFilters from "../components/ListingFilters";
+
 
 const ListingsPage: React.FC = () => {
-  const [city, setCity] = useState<string>("");
 
-  const { listings, loading, error } = useListings({
-    city: city || undefined, // передаём undefined если пусто
-  });
+  const dispatch = useAppDispatch();
+  const { listings  } : { listings: IListingCard[]}= useListings();
+
+   useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Box mb={3}>
-        <TextField
-          label="Фильтр по городу"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          fullWidth
-          select
-        >
-          <MenuItem value="">Все города</MenuItem>
-          <MenuItem value="Краснодар">Краснодар</MenuItem>
-          <MenuItem value="Москва">Москва</MenuItem>
-          <MenuItem value="Сочи">Сочи</MenuItem>
-        </TextField>
-      </Box>
+   <Box sx={{ display: 'flex', maxWidth: 1200, mx: 'auto', width: '100%', mt: 5 }}>
+      <ListingFilters/>
 
-      {loading && <CircularProgress />}
-      {error && <Typography color="error">{error}</Typography>}
+      <Box sx={{ flex: 1, p: 2 }}>
+        {listings.map((item) => (
+          <ListingCard key={item.id} {...item} />
+        ))}
 
-      {listings.map((listing) => (
-        <ListingCard key={listing.id} {...listing} />
-      ))}
-    </Container>
+      </Box>  
+    </Box>
   );
 };
 

@@ -50,7 +50,6 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
     return (
         <Container maxWidth='xs' sx={{ mt: 2 }}>          
             <Box 
-                component='form'
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -122,7 +121,6 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                 />
                 <Button 
                     variant="outlined" 
-                    type="submit" 
                     fullWidth
                     onClick={handleClickSignUp}
                     sx={{ textTransform: 'none'}}

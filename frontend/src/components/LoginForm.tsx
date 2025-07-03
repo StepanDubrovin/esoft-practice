@@ -44,7 +44,6 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
     return (
         <Container sx={{ mt: 2 }}>
             <Box 
-                component='form'
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -96,7 +95,6 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                 />
                 <Button 
                     variant="outlined" 
-                    type="submit" 
                     fullWidth
                     onClick={handleClickLogin}
                     sx={{ textTransform: 'none'}}

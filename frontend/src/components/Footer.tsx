@@ -17,7 +17,6 @@ const Footer = React.memo(() => {
             sx={{
                 py: 3,
                 px: 2,
-                mt: 'auto',
                 backgroundColor: '#131313'
             }}
         >

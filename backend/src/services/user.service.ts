@@ -43,7 +43,15 @@ class UserService {
             id: user.id,
             email: user.email
         })
-        return{accessToken}
+        return{ 
+            accessToken,
+            user: {
+                id: user.id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName
+            }
+         }
     }
 
     async login(userData: ILoginData) {
@@ -54,7 +62,15 @@ class UserService {
                 id: user.id,
                 email: user.email
             });
-            return { accessToken }
+            return { 
+                accessToken,
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }
+             }
         } else {
             throw ApiError.BadRequest('Неверный пароль и email');
         }

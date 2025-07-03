@@ -1,4 +1,7 @@
+import { IUser } from "../IUser";
+
 export interface AuthResponse {
     accessToken: string,
-    validToken: boolean
+    validToken: boolean,
+    user: IUser
 }

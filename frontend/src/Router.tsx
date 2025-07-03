@@ -4,9 +4,23 @@ import Layout from "./components/Layout";
 import ListingsPage from "./pages/ListingPage";
 
 
+const LazyNoMatchPage = React.lazy(
+    () => import('./pages/NoMatchPage')
+)
+
+const LazyProfilePage = React.lazy(
+    () => import('./pages/ProfilePage')
+)
+
+const LazyUserListingPage = React.lazy(
+    () => import('./pages/UserListingPage')
+)
+
 const routes = [
     { path: '', element: <ListingsPage/>},
-
+    { path: '*', element: <LazyNoMatchPage /> },
+    { path: 'profile', element: <LazyProfilePage /> },
+    { path: 'userListings', element: <LazyUserListingPage /> },
 ];
 
 export const Router = () => (

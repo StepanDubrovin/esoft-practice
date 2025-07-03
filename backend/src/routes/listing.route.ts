@@ -36,7 +36,7 @@ const validateListing: ValidationChain[] = [
 export default (listingController: ListingController) => {
     const router = express.Router();
 
-    router.post('/listing', validateListing, listingController.createListing);
+    router.post('/listing', authenticateJWT, validateListing, listingController.createListing);
     router.get('/listings', listingController.getAllListings);
     router.get('/listing/:listing_id', listingController.getListingById);
     router.put('/listing/:listing_id', authenticateJWT,listingController.updateListing);

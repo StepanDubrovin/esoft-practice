@@ -13,7 +13,6 @@ export default class ListingService {
             type: ListingType;
             city: string;
             status: ListingStatus;
-            creatorId: string
         }
     ) : Promise<AxiosResponse> {
         return $api.post('/listing', listingData);
@@ -36,7 +35,7 @@ export default class ListingService {
             status: ListingStatus;
         }
     ) : Promise<AxiosResponse> {
-        return $api.patch(`/listing/${listing_id}`, listingData)
+        return $api.put(`/listing/${listing_id}`, listingData)
     }
 
     static async getListing(
@@ -45,8 +44,8 @@ export default class ListingService {
         return $api.get(`/listing/${listing_id}`)
     }
 
-    static async deleteListing() : Promise<AxiosResponse> {
-        return $api.delete(`/listing`)
+    static async deleteListing(listing_id: string) : Promise<AxiosResponse> {
+        return $api.delete(`/listing/${listing_id}`)
     } 
 
 }
