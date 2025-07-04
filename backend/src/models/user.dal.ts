@@ -1,6 +1,7 @@
 import db from '../db';
 import { ICreateUserData } from '../interfaces/ICreateUserData';
 import { ApiError } from '../exceptions/api_errors';
+import { IUpdateUserData } from '../interfaces/IUpdateUserData';
 
 class UserModel {
     async create(userData: ICreateUserData) {
@@ -42,6 +43,22 @@ class UserModel {
             return await query.where('id', id).first();
         } catch(err) {
             console.error('Error fetching user by ID', err);
+            const errorArray: string[] = [err instanceof Error ? err.message : String(err)];
+            ApiError.BadConnectToDB(errorArray)
+        }
+    }
+
+    async update(id: string, userData: IUpdateUserData) {
+        try {
+            const query = db('users');
+            return await query.where('id', id).update({
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email,
+                password: userData.password
+            })
+        } catch(err) {
+            console.error('Error updating user by ID', err);
             const errorArray: string[] = [err instanceof Error ? err.message : String(err)];
             ApiError.BadConnectToDB(errorArray)
         }

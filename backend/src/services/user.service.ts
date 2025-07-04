@@ -5,6 +5,7 @@ import TokenService from "./token.service";
 import { INewUser } from '../interfaces/INewUser';
 import { ApiError } from '../exceptions/api_errors';
 import { ILoginData } from '../interfaces/ILoginData';
+import { IUpdateUserData } from '../interfaces/IUpdateUserData';
 
 class UserService {
     private userModel: UserModel;
@@ -82,6 +83,16 @@ class UserService {
 
     async getUserById(id: string) {
         return await this.userModel.getById(id);
+    }
+
+    async updateUser (id: string, userData: IUpdateUserData) {
+        const existingUser = await this.userModel.getById(id);
+
+        if (!existingUser) {
+            throw ApiError.BadRequest(`Пользователь с ID ${id} не найден`);
+        }
+
+        return this.userModel.update(id, userData);
     }
 }
 

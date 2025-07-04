@@ -1,4 +1,4 @@
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import UserService from "../services/user.service";
 import { validationResult } from "express-validator";
 import { ApiError } from "../exceptions/api_errors";
@@ -95,6 +95,24 @@ class UserController {
             }
 
         } catch (e) {
+            next(e);
+        }
+    }
+
+    updateUser = async(req: Request, res: Response, next: NextFunction) => {
+        try {
+            const user_id = req.params.id;
+            const updateUser = await this.userService.updateUser(
+                user_id,
+                req.body
+            );
+
+            if (updateUser) {
+                res.status(200).json(updateUser)
+            } else {
+                return next(ApiError.NotFound('Пользователь не найден'));
+            }
+        } catch(e) {
             next(e);
         }
     }

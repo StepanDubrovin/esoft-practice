@@ -22,6 +22,7 @@ export default (userController: UserController) => {
     );
 
     router.post('/logout', authenticateJWT, userController.logout);
+    router.put('/user/:id', authenticateJWT, userController.updateUser);
     router.get('/users', /* authenticateJWT, */ userController.getAllUsers);
     router.get('/user/:id', authenticateJWT, userController.getUserById);
     router.get('/checkAuth', authenticateJWT, userController.checkAuth);
