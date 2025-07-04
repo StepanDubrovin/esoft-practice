@@ -8,5 +8,10 @@ export interface IListingCard {
     type: ListingType,
     status: ListingStatus,
     description?: string,
-    creatorId: string
+    creatorId: string, 
+    author?: {
+        firstName: string,
+        lastName: string,
+        email: string
+    }
 }

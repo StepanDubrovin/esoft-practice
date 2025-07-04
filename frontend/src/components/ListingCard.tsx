@@ -15,10 +15,13 @@ const ListingCard: React.FC<IListingCard> = ({
     type, 
     status,
     description, 
-    creatorId
+    creatorId, 
+    author
 }) => {
     const users = useAppSelector((state) => state.user.users);
-    const author = users.find((u) => String(u.id) === String(creatorId));
+    const authorUsers = users.find((u) => String(u.id) === String(creatorId));
+
+    const displayAuthor = author || authorUsers;
 
     return (
         <Box 
@@ -77,8 +80,8 @@ const ListingCard: React.FC<IListingCard> = ({
             >
                 <Typography variant="subtitle2" color="text.secondary">
                     Контакты:<br />
-                    {author ? `${author.firstName} ${author.lastName}` : 'Неизвестный'} <br />
-                    {author.email}
+                    {displayAuthor.firstName} {displayAuthor.lastName} <br />
+                    {displayAuthor?.email}
                 </Typography>
             </Box>
         </Box>
