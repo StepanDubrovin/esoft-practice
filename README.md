@@ -22,14 +22,18 @@
 
 ## Технологии
 
+### Backend:
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Docker](https://www.docker.com/)
 - [Knex.js](https://knexjs.org/) 
 - [Docker](https://www.docker.com/)
-- [React](https://react.dev/) 
+
+### Frontend:
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Vite](https://vitejs.dev/)
 
 ---
