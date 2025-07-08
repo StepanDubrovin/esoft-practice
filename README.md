@@ -64,7 +64,7 @@ PORT=3000
 SESSION_DURATION=3600
 JWT_SECRET=your_jwt_secret
 SALT_ROUNDS=10
-CLIENT_URL=your_localhost
+CLIENT_URL=http://localhost:5173
 ```
 
 ### 4. Собрать и запустить контейнер
@@ -75,7 +75,7 @@ docker compose up --build
 
 Приложение будет доступно по адресу: [http://localhost:3000](http://localhost:3000)
 
-## Быстрый старт Frontend (через Docker)
+## Быстрый старт Frontend 
 
 ### 1. Установить зависимости
 
