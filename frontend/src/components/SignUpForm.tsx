@@ -100,8 +100,9 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                     sx={{ mb: 2 }}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
-                    InputProps={{
-                        endAdornment: (
+                    slotProps={{
+                        input: {
+                            endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
                                     onClick={() => setShowPassword(!showPassword)}
@@ -117,6 +118,7 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                                 </IconButton>
                             </InputAdornment>
                         )
+                        }
                     }}
                 />
                 <Button 

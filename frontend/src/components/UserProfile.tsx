@@ -1,41 +1,53 @@
-import { Box, Typography, Paper,  Button  } from "@mui/material";
+import { useState } from "react";
+import { Box, Typography, Button, Avatar } from "@mui/material";
 import { useAppSelector } from "../hooks/hooks";
-import { useNavigate } from "react-router-dom";
+import EditUserModal from "./EditUser";
 
 const UserProfile = () => {
   const currentUser = useAppSelector((state) => state.user.currentUser);
-  const navigate = useNavigate();
+  const [editOpen, setEditOpen] = useState(false);
 
-  const handleMenu = () => {
-      
-      navigate('/');
-    };
+  const handleOpen = () => setEditOpen(true);
+  const handleClose = () => setEditOpen(false);
 
   return (
-    <Box 
-      sx={{ 
-        mt: 4, 
-        display: 'flex', 
-        justifyContent: 'center' 
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 4,
+        p: 4,
+        width: '100%',
+        maxWidth: 700,
       }}
     >
-      <Paper 
-        sx={{ 
-          p: 4, 
-          width: '100%', 
-          maxWidth: 400 
-          }}
-      >
-        <Typography variant="h5" gutterBottom>
+      <Avatar sx={{ width: '200px', height: '200px', fontSize: 60 }}>
+        {currentUser?.firstName?.[0]}
+      </Avatar>
+      <Box>
+        <Typography variant="h4" gutterBottom>
           Мой профиль
         </Typography>
-        <Typography><strong>Имя:</strong> {currentUser.firstName}</Typography>
-        <Typography><strong>Фамилия:</strong> {currentUser.lastName}</Typography>
-        <Typography><strong>Email:</strong> {currentUser.email}</Typography>
-      </Paper>
-      <Button onClick={handleMenu}>
-        /
-      </Button>
+
+        <Typography variant="h6"><strong>Имя: </strong>{currentUser?.firstName}</Typography>
+        <Typography variant="h6"><strong>Фамилия: </strong>{currentUser?.lastName}</Typography>
+        <Typography variant="h6"><strong>Email: </strong>{currentUser?.email}</Typography>
+
+        <Button
+          sx={{
+            height: '40px',
+            mt: '10px',
+            backgroundColor: "#131313",
+            textTransform: 'none',
+            color: '#fff'
+          }}
+          onClick={handleOpen}
+        >
+          Редактировать
+        </Button>
+      </Box>
+
+      <EditUserModal open={editOpen} onClose={handleClose} />
     </Box>
   );
 };

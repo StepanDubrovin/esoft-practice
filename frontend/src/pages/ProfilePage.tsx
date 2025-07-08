@@ -1,4 +1,5 @@
 import RequireAuth from "../components/RequireAuth";
+import UserListings from "../components/UserListings";
 import UserProfile from "../components/UserProfile";
 import useCheckAuth from "../hooks/useCheckAuth";
 
@@ -14,7 +15,10 @@ const ProfilePage = () => {
     }
 
     return (
-        <UserProfile /> 
+        <>
+            <UserProfile />
+            <UserListings />
+        </>
     )
 }
 

@@ -13,5 +13,7 @@ export interface IListingCard {
         firstName: string,
         lastName: string,
         email: string
-    }
+    },
+    showDelete?: boolean,
+    onDelete?: (id: string) => void  
 }

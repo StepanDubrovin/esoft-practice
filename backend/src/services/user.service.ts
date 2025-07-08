@@ -92,7 +92,23 @@ class UserService {
             throw ApiError.BadRequest(`Пользователь с ID ${id} не найден`);
         }
 
-        return this.userModel.update(id, userData);
+        let hashedPassword = '';
+        if(userData.password) {
+            hashedPassword = await bcrypt.hash(
+                userData.password,
+                parseInt(process.env.SALT_ROUNDS!)
+            );
+        }
+
+        const newUserData = Object.assign(
+            {},
+            userData.firstName && { firstName: userData.firstName},
+            userData.lastName && { lastName: userData.lastName},
+            userData.email && { email: userData.email},
+            hashedPassword !== '' && { password: hashedPassword }
+        )   
+
+        return this.userModel.update(id, newUserData);
     }
 }
 

@@ -67,20 +67,21 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                 <TextField
                     label='Пароль'
                     name='password'
-                    type={showPassword ? 'text': 'password'}
+                    type={showPassword ? 'text' : 'password'}
                     size="small"
                     fullWidth
                     required
                     sx={{ mb: 2 }}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
-                    InputProps={{
-                        endAdornment: (
+                    slotProps={{
+                        input: {
+                            endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton
                                     onClick={() => setShowPassword(!showPassword)}
                                     edge='end'
-                                    arial-label='toogle password visibility'
+                                    aria-label='toggle password visibility'
                                     size="small"
                                 >
                                     {showPassword ? (
@@ -91,6 +92,7 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                                 </IconButton>
                             </InputAdornment>
                         )
+                        }
                     }}
                 />
                 <Button 

@@ -1,16 +1,20 @@
 import {
     Box,
     Container,
-    Typography,
     IconButton,
     Stack,
-    Link
+    Link,
+    Button
 } from '@mui/material';
 import React from 'react';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import { useNavigate } from 'react-router-dom';
+
 
 const Footer = React.memo(() => {
+
+    const navigate = useNavigate();
     return (
         <Box
             component="footer"
@@ -34,9 +38,15 @@ const Footer = React.memo(() => {
                             </IconButton>
                         </Link>
                     </Stack>
-                    <Typography variant="body2" sx={{ color: '#ffffff' }} align="center">
-                        © 2025 Listings
-                    </Typography>
+                    <Button sx={{
+                        textTransform: 'none',
+                        color: '#fff',
+                        backgroundColor: 'inherit'
+                        }}
+                        onClick={() => navigate('/')}
+                    >
+                        Главная
+                    </Button>
                 </Stack>
             </Container>
         </Box>

@@ -7,8 +7,10 @@ import {
 import { IListingCard } from "../interfaces/IListingCard";
 import { typeMap, statusMap } from "../constants/listingsMap";
 import { useAppSelector } from "../hooks/hooks";
+import { useNavigate } from "react-router-dom";
 
 const ListingCard: React.FC<IListingCard> = ({
+    id,
     title,
     price,
     city,
@@ -23,8 +25,11 @@ const ListingCard: React.FC<IListingCard> = ({
 
     const displayAuthor = author || authorUsers;
 
+    const navigate = useNavigate();
+
     return (
         <Box 
+            onClick={() => navigate(`/listing/${id}`)}
             sx={{ 
                 display: 'flex', 
                 p: 2, 

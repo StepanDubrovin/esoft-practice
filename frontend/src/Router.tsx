@@ -16,11 +16,16 @@ const LazyUserListingPage = React.lazy(
     () => import('./pages/UserListingPage')
 )
 
+const LazyFullListingPage = React.lazy(
+    () => import('./pages/FullListing')
+)
+
 const routes = [
     { path: '', element: <ListingsPage/>},
     { path: '*', element: <LazyNoMatchPage /> },
     { path: 'profile', element: <LazyProfilePage /> },
     { path: 'userListings', element: <LazyUserListingPage /> },
+    { path: '/listing/:id', element: <LazyFullListingPage /> },
 ];
 
 export const Router = () => (

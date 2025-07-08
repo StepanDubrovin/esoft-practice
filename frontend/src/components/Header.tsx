@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography, IconButton } from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton, Link } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import useCheckAuth from "../hooks/useCheckAuth";
@@ -22,9 +22,9 @@ const Header = () => {
     <Box>
       <AppBar position="static" sx={{ backgroundColor: "#131313" }}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Link href='/' variant="h6" underline="none" sx={{ flexGrow: 1, color: '#fff' }}>
             Listings
-          </Typography>
+          </Link>
 
           {store.isAuth ? (
             <IconButton

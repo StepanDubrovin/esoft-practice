@@ -4,6 +4,7 @@ import { ISignInData } from "../models/ISignInData";
 import { ISignUpData } from "../models/ISignUpData";
 import { IUserState } from "../models/IUserState";
 import UserService from "../services/user.service";
+import { TFormUser } from "../models/TFormUser";
 
 const initialState: IUserState = {
     isAuth: false,
@@ -89,6 +90,33 @@ export const getAllUsers = createAsyncThunk(
     },
 )
 
+export const updateUser = createAsyncThunk(
+    'user/update',
+    async (payload: TFormUser, { rejectWithValue }) => {
+        try {
+            const response = await UserService.updateUser(payload);
+            return response.data;
+        } catch (error) {
+            console.error('Ошибка обвновления пользователя', error);
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const fetchCurrentUser = createAsyncThunk(
+    'user/fetchCurrentUser',
+    async (userId: string, { rejectWithValue }) => {
+        try {
+            const response = await UserService.fetchUserById(userId);
+            return response.data;
+        } catch (error) {
+            console.error('Ошибка полученяи текущего пользователя', error);
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
 const userReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case registration.pending.type:
@@ -98,6 +126,11 @@ const userReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 isLoading: true
+            };
+        case fetchCurrentUser.pending.type:
+            return {
+                ...state,
+                isLoading: true,
             };
         case registration.fulfilled.type:
         case login.fulfilled.type:
@@ -114,7 +147,7 @@ const userReducer = (state = initialState, action: any) => {
                 isAuth: false,
                 validToken: false,
                 currentUser: null, 
-                users: [],
+                /* users: [], */
                 isLoading: false
             };
         case checkAuth.fulfilled.type:
@@ -130,6 +163,21 @@ const userReducer = (state = initialState, action: any) => {
                 users: action.payload.users,
                 isLoading: false
         };
+       case updateUser.fulfilled.type:
+            return {
+                ...state,
+                currentUser: {
+                ...state.currentUser,
+                ...action.payload, 
+                },
+                isLoading: false
+            };
+        case fetchCurrentUser.fulfilled.type:
+            return {
+                ...state,
+                currentUser: action.payload,
+                isLoading: false,
+            };
         case login.rejected.type:
         case registration.rejected.type:
         case logout.rejected.type:
@@ -144,6 +192,11 @@ const userReducer = (state = initialState, action: any) => {
                 isLoading: false,
                 validToken: false,
                 users: [],
+            };
+        case fetchCurrentUser.rejected.type:
+            return {
+                ...state,
+                isLoading: false,
             };
         default: 
             return state;

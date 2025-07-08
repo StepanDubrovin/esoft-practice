@@ -37,12 +37,20 @@ class ListingModel {
             if (filters.type) {
                 query.where('type', filters.type);
             }
+
+            if (filters.priceFrom) {
+                query.where('price', '>=', filters.priceFrom);
+            }
+            if (filters.priceTo) {
+                query.where('price', '>=', filters.priceTo);
+            }
+
             if (filters.sortPrice) {
                 query.orderBy('price', filters.sortPrice)
             } else {
                 query.orderBy('price', 'desc');
             }
-            // добавить подумать
+            
             return await query.select();
         } catch (err) {
             console.error('Error fetching listings', err);

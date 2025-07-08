@@ -8,6 +8,7 @@ import { ICreateListing } from "../interfaces/ICreateListing";
 const CreateListingForm: React.FC<ICreateListing> = ({ setTabIndex  
 }) => {
     
+    
     const [listingData, setListingData] = useState({
         title: '',
         description: '',

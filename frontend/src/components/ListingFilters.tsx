@@ -1,15 +1,26 @@
 import React from "react";
 import { Box, TextField, MenuItem, Button, Typography } from "@mui/material";
 import { ListingType } from "../constants/listing";
+import { useListingFilters } from "../hooks/useListingFilters";
+import { typeMap } from "../constants/listingsMap";
 
 const cities = ["Москва", "Тюмень" ];
-const listingTypes = Object.values(ListingType);
+const listingTypes = Object.values(ListingType).filter(
+    (v) => typeof v === 'number'
+) as ListingType[];
+
 const sortOptions = [
     { value: "asc", label: "По возрастанию" },
     { value: "desc", label: "По убыванию" }
 ];
 
-const ListingFilters: React.FC = () => {
+interface ListingFiltersProps {
+  onApply: (filters: any) => void;
+}
+
+const ListingFilters: React.FC<ListingFiltersProps> = ({ onApply }) => {
+    const { filters, setFilter, applyFilters, resetFilters } = useListingFilters();
+
     return (
         <Box 
             sx={{ 
@@ -26,7 +37,8 @@ const ListingFilters: React.FC = () => {
                 label="Город"
                 fullWidth
                 margin="normal"
-                defaultValue=""
+                value={filters.city || ''}
+                onChange={(e) => setFilter('city', e.target.value)}
                 slotProps={{
                     input: {
                         sx: {
@@ -49,7 +61,7 @@ const ListingFilters: React.FC = () => {
             >
             <MenuItem value="" >Все</MenuItem>
             {cities.map((city) => (
-                <MenuItem key={city} value={city} >{city}</MenuItem>
+                <MenuItem key={city} value={city}>{city}</MenuItem>
             ))}
             </TextField>
 
@@ -58,7 +70,8 @@ const ListingFilters: React.FC = () => {
                 label="Тип"
                 fullWidth
                 margin="normal"
-                defaultValue=""
+                value={filters.type || ''}
+                onChange={(e) => setFilter('type', Number(e.target.value))}
                 slotProps={{
                     input: {
                         sx: {
@@ -81,7 +94,7 @@ const ListingFilters: React.FC = () => {
             >
             <MenuItem value="" >Все</MenuItem>
                 {listingTypes.map((type) => (
-                    <MenuItem key={type} value={type}>{type}</MenuItem>
+                    <MenuItem key={type} value={type}>{typeMap[type]}</MenuItem>
                 ))}
             </TextField>
 
@@ -90,7 +103,8 @@ const ListingFilters: React.FC = () => {
                 label="Сортировка по цене"
                 fullWidth
                 margin="normal"
-                defaultValue="desc"
+                value={filters.sortPrice || 'desc'}
+                onChange={(e) => setFilter('sortPrice', e.target.value)}
                 slotProps={{
                     input: {
                         sx: {
@@ -124,6 +138,8 @@ const ListingFilters: React.FC = () => {
                 type="number"
                 fullWidth
                 size="small"
+                value={filters.priceFrom ?? ''}
+                onChange={(e) => setFilter('priceFrom', Number(e.target.value) || '')}
                 slotProps={{
                     input: {
                         sx: {
@@ -149,6 +165,8 @@ const ListingFilters: React.FC = () => {
                     type="number"
                     fullWidth
                     size="small"
+                    value={filters.priceTo ?? ''}
+                    onChange={(e) => setFilter('priceTo', Number(e.target.value) || '')}
                     slotProps={{
                     input: {
                         sx: {
@@ -161,8 +179,30 @@ const ListingFilters: React.FC = () => {
                 />
             </Box>
 
-            <Button variant="contained" fullWidth sx={{ mt: 3, bgcolor: 'black', textTransform: 'none', }}>
+            <Button 
+                variant="contained" 
+                fullWidth 
+                sx={{ 
+                    mt: 3, 
+                    bgcolor: 'black', 
+                    textTransform: 'none', 
+                    }}
+                onClick={() => onApply(applyFilters())}
+                >
                 Применить
+            </Button>
+            
+            <Button
+                variant="text"
+                fullWidth
+                sx={{ mt: 1, textTransform: "none", color: 'black',  }}
+                
+                onClick={() => {
+                resetFilters();
+                onApply({});
+                }}
+            >
+                Сбросить
             </Button>
         </Box>
     );

@@ -9,20 +9,24 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../hooks/hooks";
 import { getAllUsers } from "../store/userSlice";
 import ListingFilters from "../components/ListingFilters";
-
+import { useState } from "react";
+import { IListingFilters } from "../interfaces/IListingFilters";
 
 const ListingsPage: React.FC = () => {
 
-  const dispatch = useAppDispatch();
-  const { listings  } : { listings: IListingCard[]}= useListings();
+  const [filters, setFilters] = useState<IListingFilters>();
 
-   useEffect(() => {
+  const dispatch = useAppDispatch();
+
+  const { listings }: { listings: IListingCard[] } = useListings(filters);
+
+  useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
   return (
    <Box sx={{ display: 'flex', maxWidth: 1200, mx: 'auto', width: '100%', mt: 5 }}>
-      <ListingFilters/>
+      <ListingFilters onApply={setFilters}/>
 
       <Box sx={{ flex: 1, p: 2 }}>
         {listings.map((item) => (
