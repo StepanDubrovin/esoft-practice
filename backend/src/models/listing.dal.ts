@@ -42,7 +42,7 @@ class ListingModel {
                 query.where('price', '>=', filters.priceFrom);
             }
             if (filters.priceTo) {
-                query.where('price', '>=', filters.priceTo);
+                query.where('price', '<=', filters.priceTo);
             }
 
             if (filters.sortPrice) {

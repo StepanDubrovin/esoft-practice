@@ -30,6 +30,41 @@ export async function seed(knex: Knex): Promise<void> {
             lastName: "Сергеев", 
             email: "serg@gmail.com", 
             password: hashedPassword
+        },
+        {
+            id: uuidv7(),
+            firstName: "Алексей",
+            lastName: "Алексеев",
+            email: "alex@gmail.com",
+            password: hashedPassword
+        },
+        {
+            id: uuidv7(),
+            firstName: "Мария",
+            lastName: "Маркова",
+            email: "maria@gmail.com",
+            password: hashedPassword
+        },
+        {
+            id: uuidv7(),
+            firstName: "Ольга",
+            lastName: "Ольгина",
+            email: "olga@gmail.com",
+            password: hashedPassword
+        },
+        {
+            id: uuidv7(),
+            firstName: "Дмитрий",
+            lastName: "Дмитриев",
+            email: "dmitry@gmail.com",
+            password: hashedPassword
+        },
+        {
+            id: uuidv7(),
+            firstName: "Наталья",
+            lastName: "Натальева",
+            email: "natalia@gmail.com",
+            password: hashedPassword
         }
     ]);
 }

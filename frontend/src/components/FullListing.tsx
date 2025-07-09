@@ -47,8 +47,7 @@ const FullListing: React.FC = () => {
                         justifyContent: 'flex-start',
                         gap: 2,
                         minWidth: '220px',
-
-                        pt: 6
+                       
                     }}
                 >
                     <Typography variant="h4" fontWeight='bold'>Цена: {listing?.price.toLocaleString()} ₽</Typography>
@@ -60,16 +59,24 @@ const FullListing: React.FC = () => {
                 </Box>
             </Box>
             
-            <Box sx={{ mt: 4 }}>
-                <Typography variant="h6" sx={{ mb: 2 }}><strong>Описание: </strong>{listing?.description}</Typography>
+            <Box sx={{ mb: 4 }}>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                        Описание:
+                    </Typography>
+                    <Typography variant="body1" sx={{ whiteSpace: 'pre-line', lineHeight: 1.8 }}>
+                        {listing?.description}
+                    </Typography>
+            </Box>
 
-                <Typography variant="h6" ><strong>Город: </strong>{listing?.city}</Typography>
-                <Typography variant="h6"><strong>Тип: </strong>{typeMap[listing?.type as ListingType]}</Typography>
-                <Typography variant="h6"><strong>Статус: </strong>{statusMap[listing?.status as ListingStatus]}</Typography>
+                <Box>
+                    <Typography variant="h6"><strong>Город:</strong> {listing?.city}</Typography>
+                    <Typography variant="h6"><strong>Тип:</strong> {typeMap[listing?.type as ListingType]}</Typography>
+                    <Typography variant="h6"><strong>Статус:</strong> {statusMap[listing?.status as ListingStatus]}</Typography>
+                </Box>
             </Box>
 
             
-        </Box>
+
     );
 };
 

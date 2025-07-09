@@ -59,7 +59,16 @@ const ListingCard: React.FC<IListingCard> = ({
                     <Typography variant="h6" gutterBottom>
                         {title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography 
+                        variant="body2" 
+                        color="text.secondary"
+                        sx={{
+                            display: '-webkit-box',
+                            overflow: 'hidden',
+                            WebkitBoxOrient: 'vertical',
+                            WebkitLineClamp: 1
+                        }}
+                    >
                         {description}
                     </Typography>
                     <Box mt={1}>

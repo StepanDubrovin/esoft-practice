@@ -4,7 +4,8 @@ import { ListingType } from "../constants/listing";
 import { useListingFilters } from "../hooks/useListingFilters";
 import { typeMap } from "../constants/listingsMap";
 
-const cities = ["Москва", "Тюмень" ];
+const cities = ["Москва", "Санкт-Петербург", "Тюмень", 
+    "Екатеринбург", "Новосибирск", "Сургут" ];
 const listingTypes = Object.values(ListingType).filter(
     (v) => typeof v === 'number'
 ) as ListingType[];

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { 
     TextField, 
     Button, 
@@ -13,6 +13,7 @@ import { IAuth } from "../interfaces/IAuth";
 import { useAppDispatch } from "../hooks/hooks";
 import { registration } from "../store/userSlice";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import useValidateFields from "../hooks/useValidateFields";
 
 export default function SignUpForm({ onSwitch, onClose}: IAuth) {
     const dispatch = useAppDispatch();
@@ -24,7 +25,21 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
 
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+
+    const [touched, setTouched] = useState({
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false
+    });
     
+    const { isValid: isSignupFieldsFilled, errors } = useValidateFields({
+        email: userEmail, 
+        password: userPassword,
+        firstName: userFirstName,
+        lastName: userLastName
+    })
+
     const handleClickSignUp = async () => {
         try {
             await dispatch(
@@ -59,6 +74,14 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                 <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }} >
                     Регистрация
                 </Typography>
+                {error && (
+                    <Typography 
+                        align="center"
+                        sx={{color: 'red'}}
+                    >
+                        Ошибка регистрации. Пожалуйста, попробуйте снова.
+                    </Typography>
+                )}
                 <TextField
                     label='Имя'
                     name='firstName'
@@ -68,6 +91,9 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                     sx={{ mb: 2 }}
                     value={userFirstName}
                     onChange={(e) => setUserFirstName(e.target.value)}
+                    onBlur={() => setTouched(prev => ({...prev, firstName: true}))}
+                    error={errors.firstName && touched.firstName}
+                    helperText={errors.firstName && touched.firstName ? 'Имя обязательно' : ''}
                 />
                 <TextField
                     label='Фамилия'
@@ -78,6 +104,9 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                     sx={{ mb: 2 }}
                     value={userLastName}
                     onChange={(e) => setUserLastName(e.target.value)}
+                     onBlur={() => setTouched(prev => ({...prev, firstName: true}))}
+                    error={errors.firstName && touched.firstName}
+                    helperText={errors.firstName && touched.firstName ? 'Фамилия обязательна' : ''}
                 />
                 <TextField
                     label='Email'
@@ -89,6 +118,9 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                     sx={{ mb: 2 }}
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
+                    onBlur={() => setTouched(prev => ({ ...prev, email: true }))}
+                    error={errors.email && touched.email}
+                    helperText={errors.email && touched.email ? 'Неверный email' : ''}
                 />
                 <TextField
                     label='Пароль'
@@ -100,6 +132,9 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                     sx={{ mb: 2 }}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
+                    onBlur={() => setTouched(prev => ({ ...prev, password: true }))}
+                    error={errors.password && touched.password}
+                    helperText={errors.password && touched.password ? 'Пароль должен быть не менее 8 символов' : ''}
                     slotProps={{
                         input: {
                             endAdornment: (
@@ -126,6 +161,7 @@ export default function SignUpForm({ onSwitch, onClose}: IAuth) {
                     fullWidth
                     onClick={handleClickSignUp}
                     sx={{ textTransform: 'none'}}
+                    disabled={!isSignupFieldsFilled}
                 >
                     Зарегистрироваться
                 </Button>

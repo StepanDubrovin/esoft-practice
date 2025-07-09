@@ -86,6 +86,25 @@ const EditListingModal: React.FC<IUpdateListing> = ({ open, onClose, listing, se
                     value={form.title}
                     onChange={handleChange}
                     sx={{ mb: 2 }}
+                    slotProps={{
+                    input: {
+                        sx: {
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'black',
+                            },
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }   
+                    },
+                    inputLabel: {
+                        sx: {
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }
+                    }
+                }}
                 />
                 <TextField
                     label='Описание'
@@ -96,6 +115,25 @@ const EditListingModal: React.FC<IUpdateListing> = ({ open, onClose, listing, se
                     value={form.description}
                     onChange={handleChange}
                     sx={{ mb: 2 }}
+                    slotProps={{
+                    input: {
+                        sx: {
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'black',
+                            },
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }   
+                    },
+                    inputLabel: {
+                        sx: {
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }
+                    }
+                }}
                 />
                 <TextField
                     label='Цена'
@@ -105,7 +143,27 @@ const EditListingModal: React.FC<IUpdateListing> = ({ open, onClose, listing, se
                     value={form.price}
                     onChange={handleChange}
                     sx={{ mb: 2 }}
+                    slotProps={{
+                    input: {
+                        sx: {
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'black',
+                            },
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }   
+                    },
+                    inputLabel: {
+                        sx: {
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }
+                    }
+                }}
                 />
+                <Box sx={{display: 'flex', gap: 2, mb: 2}}></Box>
                 <TextField
                     select
                     label='Тип'
@@ -114,12 +172,28 @@ const EditListingModal: React.FC<IUpdateListing> = ({ open, onClose, listing, se
                     value={form.type}
                     onChange={handleChange}
                     sx={{ mb: 2 }}
+                    slotProps={{
+                    input: {
+                        sx: {
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'black',
+                            },
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }   
+                    },
+                    inputLabel: {
+                        sx: {
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }
+                    }
+                }}
                 >
-                    {Object.values(ListingType).map((type) => (
-                        <MenuItem key={type} value={type}>
-                            {type}
-                        </MenuItem>
-                    ))}
+                    <MenuItem value={ListingType.RENT}>Аренда</MenuItem>
+                    <MenuItem value={ListingType.SALE}>Продажа</MenuItem>
                 </TextField>
                 <TextField
                     label='Город'
@@ -128,6 +202,25 @@ const EditListingModal: React.FC<IUpdateListing> = ({ open, onClose, listing, se
                     value={form.city}
                     onChange={handleChange}
                     sx={{ mb: 2 }}
+                    slotProps={{
+                    input: {
+                        sx: {
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'black',
+                            },
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }   
+                    },
+                    inputLabel: {
+                        sx: {
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }
+                    }
+                }}
                 />
                 <TextField
                     select
@@ -137,12 +230,30 @@ const EditListingModal: React.FC<IUpdateListing> = ({ open, onClose, listing, se
                     value={form.status}
                     onChange={handleChange}
                     sx={{ mb: 2 }}
+                    slotProps={{
+                    input: {
+                        sx: {
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'black',
+                            },
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }   
+                    },
+                    inputLabel: {
+                        sx: {
+                            "&.Mui-focused": {
+                                color: "black",
+                            },  
+                        }
+                    }
+                }}
                 >
-                    {Object.values(ListingStatus).map((status) => (
-                        <MenuItem key={status} value={status}>
-                            {status}
-                        </MenuItem>
-                    ))}
+                    <MenuItem value={ListingStatus.ACTIVE}>Активно</MenuItem>
+                    <MenuItem value={ListingStatus.SOLD}>Продано</MenuItem>
+                    <MenuItem value={ListingStatus.RENTED}>Сдано</MenuItem>
+                    <MenuItem value={ListingStatus.ARCHIVED}>В архиве</MenuItem>
                 </TextField>
                 <Button 
                     variant="contained"

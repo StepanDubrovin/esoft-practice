@@ -1,4 +1,3 @@
-import React from "react";
 import { 
     TextField, 
     Button, 
@@ -14,6 +13,7 @@ import { useAppDispatch } from "../hooks/hooks";
 import { login } from "../store/userSlice";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import useValidateFields from "../hooks/useValidateFields";
 
 export default function LoginForm ({ onSwitch, onClose } : IAuth) {
     const dispatch = useAppDispatch();
@@ -22,6 +22,16 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
 
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+
+    const [touched, setTouched] = useState({
+        email: false,
+        password: false
+    });
+
+    const { isValid: isLoginFieldsFilled, errors } = useValidateFields({
+        email: userEmail, 
+        password: userPassword,
+    })
 
     const handleClickLogin = async () => {
         try {
@@ -53,6 +63,14 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                 <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }} >
                     Войти
                 </Typography>
+                {error && (
+                        <Typography 
+                            align="center"
+                            sx={{color: 'red'}}
+                        >
+                            Ошибка логина. Пожалуйста, попробуйте снова.
+                        </Typography>
+                )}
                 <TextField
                     label='Email'
                     name='email'
@@ -63,6 +81,10 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                     sx={{ mb: 2 }}
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
+                    onBlur={() => setTouched(prev => ({ ...prev, email: true }))}
+                    error={errors.email && touched.email}
+                    helperText={errors.email && touched.email ? 'Неверный email' : ''}
+                    
                 />
                 <TextField
                     label='Пароль'
@@ -74,6 +96,9 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                     sx={{ mb: 2 }}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
+                    onBlur={() => setTouched(prev => ({ ...prev, password: true }))}
+                    error={errors.password && touched.password}
+                    helperText={errors.password && touched.password ? 'Пароль должен быть не менее 8 символов' : ''}
                     slotProps={{
                         input: {
                             endAdornment: (
@@ -100,6 +125,7 @@ export default function LoginForm ({ onSwitch, onClose } : IAuth) {
                     fullWidth
                     onClick={handleClickLogin}
                     sx={{ textTransform: 'none'}}
+                    disabled={!isLoginFieldsFilled}
                 >
                     Войти
                 </Button>
